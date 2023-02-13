@@ -1,30 +1,43 @@
-# linkedin_search.py
+## linkedin_search.py
+#   
+# Searches job listings using bs4
+# and scraping LinkedIn webpage
+#
 import requests
+import argparse
 from requests_html import HTMLSession
 from bs4 import BeautifulSoup
 
-title = input ("Enter the job title you wish to search for : ") 
-location = input("Enter the job location you wish to search for : ")
+parser = argparse.ArgumentParser(description='Search for jobs on LinkedIn')
+parser.add_argument('-t', '--title', type=str, help='job title of interest')
+parser.add_argument('-l', '--location', type=str, help='location of interest')
+parser.add_argument('-d', '--debug', action='store_true', help='Enable raw parser output to terminal')
 
-title = title.replace(' ', '%20')
-location = location.replace(' ', '%20')
+args = parser.parse_args()
 
-url = 'https://www.linkedin.com/jobs/search?keywords=' + title + '&location=' + location
-try:
-    session = HTMLSession()
+title = args.title.replace(' ', '%20')
+location = args.location.replace(' ', '%20')
+url = f'https://www.linkedin.com/jobs/search?keywords={title}&location={location}'
+
+with HTMLSession() as session:
     response = session.get(url)
-except requests.exceptions.RequestException as e:
-    print(e)
 
-soup = BeautifulSoup(response.text, 'html.parser')
+soup = BeautifulSoup(response.text, 'lxml')
 results = soup.find(id='main-content')
-jobs = results.find_all('div', class_='result-card__contents job-result-card__contents')
+# jobs = results.find_all('div', class_='result-card__contents job-result-card__contents')
+jobs = results.find('section', class_='two-pane-serp-page__results-list')
+jobs_list = jobs.find_all('li')
 
-for listing in jobs:
-    title = listing.find('h3', class_='result-card__title job-result-card__title')
-    company = listing.find('h4', class_='result-card__subtitle job-result-card__subtitle')
-    location = listing.find('span', class_='job-result-card__location')
-    print(title.text.strip())
-    print(company.text.strip())
-    print(location.text.strip())
-    print()
+if args.debug is not False:
+    print(jobs_list)
+else:
+    print("LinkedIn webpage changed, service not working at the moment : (")
+
+# for listing in jobs:
+#     title = listing.find('h3', class_='result-card__title job-result-card__title')
+#     company = listing.find('h4', class_='result-card__subtitle job-result-card__subtitle')
+#     location = listing.find('span', class_='job-result-card__location')
+#     print(title.text.strip())
+#     print(company.text.strip())
+#     print(location.text.strip())
+#     print()
