@@ -10,7 +10,7 @@ The following libraries are required to run this script:
 
 - Requests library (can be installed using `pip install requests`)
 - Requests-html library (can be installed using `pip install requests-html`)
-- BeautifulSoup library (can be installed using `pip install beautilfulsoup4`)
+- BeautifulSoup library (can be installed using `pip install beautifulsoup4`)
 
 ## Usage
 
