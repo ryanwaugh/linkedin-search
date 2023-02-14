@@ -6,11 +6,21 @@ A simple program allowing you to search LinkedIn for job opportunities based on 
 
 - Python 3.x
 
-The following libraries are required to run this script:
+The following libraries are required to run this script: (can be installed via `requirements.txt`)
 
-- Requests library (can be installed using `pip install requests`)
-- Requests-html library (can be installed using `pip install requests-html`)
-- BeautifulSoup library (can be installed using `pip install beautifulsoup4`)
+- `requests`
+- `requests-html`
+- `beautifulsoup4`
+
+## Installation
+
+```
+git clone https://github.com/ryanwaugh/linkedin-search
+cd linkedin-search
+python -m venv .
+./Scripts/activate
+pip install -r requirements.txt
+```
 
 ## Usage
 
@@ -26,10 +36,10 @@ options:
                         job title of interest
   -l LOCATION, --location LOCATION
                         location of interest
-  -d, --debug           Enable raw parser output to terminal
+  -d, --debug           Enable raw output dump
 ```
 
-To run the program, open a terminal and navigate to the directory where the `linkedin_search.py` file has been `git clone`'d to. Then, run the following command:
+To run the program, open a terminal and enter the following:
 
     $ python linkedin_search.py -t "job title" -l "location"
 

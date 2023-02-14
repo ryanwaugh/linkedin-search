@@ -11,10 +11,9 @@ from bs4 import BeautifulSoup
 parser = argparse.ArgumentParser(description='Search for jobs on LinkedIn')
 parser.add_argument('-t', '--title', type=str, help='job title of interest')
 parser.add_argument('-l', '--location', type=str, help='location of interest')
-parser.add_argument('-d', '--debug', action='store_true', help='Enable raw parser output to terminal')
+parser.add_argument('-d', '--debug', action='store_true', help='Enable raw output dump')
 
 args = parser.parse_args()
-
 title = args.title.replace(' ', '%20')
 location = args.location.replace(' ', '%20')
 url = f'https://www.linkedin.com/jobs/search?keywords={title}&location={location}'
@@ -32,6 +31,7 @@ if args.debug is not False:
     print(jobs_list)
 else:
     print("LinkedIn webpage changed, service not working at the moment : (")
+    print("hint: use --debug to enable raw output dump")
 
 # for listing in jobs:
 #     title = listing.find('h3', class_='result-card__title job-result-card__title')
