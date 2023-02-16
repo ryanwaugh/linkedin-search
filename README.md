@@ -36,11 +36,10 @@ options:
                         job title of interest
   -l LOCATION, --location LOCATION
                         location of interest
-  -d, --debug           Enable raw output dump
 ```
 
 To run the program, open a terminal and enter the following:
 
     $ python linkedin_search.py -t "job title" -l "location"
 
-Be sure to wrap the title and location in quotation marks if they have spaces in their names. The program will display the job listing results in the terminal window (currently broken by website change, use `--debug` to see the raw output).
+Be sure to wrap the title and location in quotation marks if they have spaces in their names. The program will display the job listing results in the terminal window.
