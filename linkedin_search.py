@@ -13,6 +13,7 @@ parser.add_argument('-t', '--title', type=str, help='job title of interest')
 parser.add_argument('-l', '--location', type=str, help='location of interest')
 
 args = parser.parse_args()
+
 title = args.title.replace(' ', '%20')
 location = args.location.replace(' ', '%20')
 url = f'https://www.linkedin.com/jobs/search?keywords={title}&location={location}'
@@ -26,12 +27,12 @@ jobs = results.find('section', class_='two-pane-serp-page__results-list')
 jobs_list = jobs.find_all('li')
 
 for listing in jobs_list:
-    title = listing.find('h3', class_='base-search-card__title')
-    company = listing.find('a', class_='hidden-nested-link')
-    location = listing.find('span', class_='job-search-card__location')
-    date = listing.find('time', class_='job-search-card__listdate')
-    print(title.text.strip())
-    print(company.text.strip())
-    print(location.text.strip())
-    print(date.text.strip())
+    title = listing.select_one('h3.base-search-card__title').text.strip()
+    company = listing.select_one('a.hidden-nested-link').text.strip()
+    location = listing.select_one('span.job-search-card__location').text.strip()
+    date = listing.select_one('time.job-search-card__listdate').text.strip()
+    print(title)
+    print(company)
+    print(location)
+    print(date)
     print()
