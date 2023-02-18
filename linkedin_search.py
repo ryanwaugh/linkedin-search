@@ -35,6 +35,9 @@ results = soup.find(id='main-content')
 jobs = results.find('section', class_='two-pane-serp-page__results-list')
 jobs_list = jobs.find_all('li')
 
+list_length = len(jobs_list)
+print(f"{list_length} jobs found: \n")
+
 # find and print info about each job listing
 for listing in jobs_list:
     title = listing.select_one('h3.base-search-card__title').text.strip()
