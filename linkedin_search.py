@@ -6,7 +6,6 @@
 import requests
 import argparse
 import sys
-from requests_html import HTMLSession
 from bs4 import BeautifulSoup
 
 # prompt for user input to specify job title & location
@@ -26,8 +25,8 @@ location = args.location.replace(' ', '%20')
 url = f'https://www.linkedin.com/jobs/search?keywords={title}&location={location}'
 
 # init session with parameterized URL
-with HTMLSession() as session:
-    response = session.get(url)
+session = requests.Session()
+response = session.get(url)
 
 # filter results to list of jobs only
 soup = BeautifulSoup(response.text, 'lxml')
