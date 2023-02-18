@@ -40,12 +40,16 @@ print(f"{list_length} jobs found: \n")
 
 # find and print info about each job listing
 for listing in jobs_list:
-    title = listing.select_one('h3.base-search-card__title').text.strip()
-    company = listing.select_one('a.hidden-nested-link').text.strip()
-    location = listing.select_one('span.job-search-card__location').text.strip()
-    date = listing.select_one('time.job-search-card__listdate').text.strip()
-    print(title)
-    print(company)
-    print(location)
-    print(date)
+    title = listing.select_one('h3.base-search-card__title')
+    company = listing.select_one('a.hidden-nested-link')
+    location = listing.select_one('span.job-search-card__location')
+    date = listing.select_one('time.job-search-card__listdate')
+    if title is not None: 
+        print(title.text.strip())
+    if company is not None:
+        print(company.text.strip())
+    if location is not None:
+        print(location.text.strip())
+    if date is not None:
+        print(date.text.strip())
     print()
