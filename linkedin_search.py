@@ -10,16 +10,26 @@ import sys
 from bs4 import BeautifulSoup
 
 def populateJobsList(url, current_session):
-    # init session with parameterized URL
-    response = current_session.get(url)
+    try:
+        response = current_session.get(url)
+        # allow for HTTPError to be raised
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as err:
+        # cleanly print HTTP error codes
+        raise SystemExit(err)
+    except requests.exceptions.RequestException as e:
+        # all other exceptions
+        raise SystemExit(e)
 
-    # filter results to list of jobs only
+    # use lxml parser to get main contents
     soup = BeautifulSoup(response.text, 'lxml')
     results = soup.find(id='main-content')
+    # select class containing relavant listings
     jobs = results.find('section', class_='two-pane-serp-page__results-list')
+    # filter results to list of jobs only
     jobs_list = jobs.find_all('li')
 
-    # select and print info about each job listing
+    # print info about each job listing
     for listing in jobs_list:
         title = listing.select_one('h3.base-search-card__title')
         company = listing.select_one('a.hidden-nested-link')
@@ -35,7 +45,7 @@ def populateJobsList(url, current_session):
             print(date.text.strip())
         print()
 
-    print(len(jobs_list), "jobs found")
+    print(len(jobs_list), "jobs found.")
 
 # prompt for user input to specify job title & location
 parser = argparse.ArgumentParser(description='Search for jobs on LinkedIn')
@@ -62,3 +72,4 @@ else:
 
 page = requests.Session()
 populateJobsList(url_string, page)
+page.close()
