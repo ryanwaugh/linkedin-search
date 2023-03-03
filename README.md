@@ -43,3 +43,9 @@ To run the program, open a terminal and enter the following:
     $ python linkedin_search.py -t "job title" -l "location"
 
 Be sure to wrap the title and location in quotation marks if they have spaces in their names. The program will display the job listing results in the terminal window.
+
+## Note:
+
+LinkedIn's default search response makes it such that this tool will always return one "full page" of 25 listings. Therefore, further attempts to allow for additional listings to be displayed from a looping prompt are scrapped.
+
+I hope you will enjoy receiving exactly 25 job results, no matter the query.
